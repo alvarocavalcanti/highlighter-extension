@@ -23,19 +23,19 @@ This is a simple extension that highlights text in web pages. It is compatible w
 
 ## Setup
 
-1. Install dependencies:
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Development:
+### 2. Development
 
 ```bash
 npm run dev
 ```
 
-3. Build for production:
+### 3 Build for production
 
 ```bash
 npm run build
