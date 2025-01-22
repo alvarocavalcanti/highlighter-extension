@@ -1,3 +1,5 @@
+const isFirefox = process.env.BROWSER === 'firefox';
+
 const manifest = {
   manifest_version: 3,
   name: "Highlighter Extension",
@@ -12,7 +14,10 @@ const manifest = {
       "128": "icons/icon128.png"
     }
   },
-  background: {
+  background: isFirefox ? {
+    scripts: ["background.js"],
+    type: "module"
+  } : {
     service_worker: "background.js"
   },
   content_scripts: [
@@ -28,4 +33,4 @@ const manifest = {
   }
 };
 
-export default manifest; 
+module.exports = { default: manifest };

@@ -13,10 +13,11 @@ const Popup = () => {
   );
 };
 
-const root = document.createElement("div");
-document.body.appendChild(root);
-ReactDOM.createRoot(root).render(
-  <React.StrictMode>
-    <Popup />
-  </React.StrictMode>
-);
+const root = document.getElementById('root');
+if (root) {
+  ReactDOM.createRoot(root).render(
+    <React.StrictMode>
+      <Popup />
+    </React.StrictMode>
+  );
+}

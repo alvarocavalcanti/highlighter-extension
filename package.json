@@ -4,7 +4,9 @@
   "description": "A cross-browser extension for highlighting text",
   "scripts": {
     "dev": "webpack --watch --config webpack.config.js",
+    "dev:firefox": "BROWSER=firefox webpack --watch --config webpack.config.js",
     "build": "webpack --config webpack.config.js --mode=production",
+    "build:firefox": "BROWSER=firefox webpack --config webpack.config.js --mode=production",
     "test": "jest"
   },
   "dependencies": {
