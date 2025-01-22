@@ -2,6 +2,8 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
+const browser = process.env.BROWSER || 'chrome';
+
 module.exports = {
   mode: 'development',
   entry: {
@@ -10,7 +12,7 @@ module.exports = {
     content: './src/content/index.ts',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, `dist/${browser}`),
     filename: '[name].js',
   },
   module: {
@@ -31,7 +33,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.BROWSER': JSON.stringify(process.env.BROWSER || 'chrome')
+      'process.env.BROWSER': JSON.stringify(browser)
     }),
     new CopyPlugin({
       patterns: [
