@@ -5,14 +5,15 @@ const manifest = {
   name: "Highlighter Extension",
   version: "1.0.0",
   description: "A cross-browser extension for highlighting text",
-  permissions: ["storage", "activeTab"],
+  permissions: ["storage", "activeTab", "contextMenus", "menus"],
   action: {
     default_popup: "popup.html",
     default_icon: {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
-    }
+    },
+    default_title: "Highlighter Extension"
   },
   background: isFirefox ? {
     scripts: ["background.js"],
