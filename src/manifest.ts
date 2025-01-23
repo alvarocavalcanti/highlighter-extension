@@ -5,11 +5,7 @@ const manifest = {
   name: "Highlighter",
   version: "1.0.0",
   description: "A cross-browser extension for highlighting text",
-  author: {
-    name: "Alvaro Cavalcanti",
-    email: "alvarovictor@gmail.com",
-    url: "https://memorablenaton.es"
-  },
+  author: "Alvaro Cavalcanti",
   homepage_url: "https://memorablenaton.es/highlighter",
   permissions: ["storage", "activeTab", "contextMenus", "menus"],
   action: {

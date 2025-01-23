@@ -21,6 +21,15 @@ const Help = () => {
           <li>Selecting single words or common passages causes all of their occurrences to be highlighted</li>
         </ul>
       </Container>
+      <Container className="p-3 text-center">
+        <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
+          <img
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+            alt="Buy Me A Coffee"
+            style={{ height: "60px", width: "217px" }}
+          />
+        </a>
+      </Container>
     </>
   );
 };
