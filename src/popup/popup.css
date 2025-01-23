@@ -1,3 +1,25 @@
+body {
+  min-width: 300px;
+  max-width: 400px;
+  min-height: 200px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.text-truncate {
+  max-width: 200px;
+}
+
+.url-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: left;
+  font-size: small;
+}
+
+.url-link:hover {
+  color: #0056b3 !important;
+}
 
 
 
