@@ -10,7 +10,7 @@ const manifest = {
     email: "alvarovictor@gmail.com",
     url: "https://memorablenaton.es"
   },
-  homepage_url: "https://your-website.com/highlighter",
+  homepage_url: "https://memorablenaton.es/highlighter",
   permissions: ["storage", "activeTab", "contextMenus", "menus"],
   action: {
     default_popup: "popup.html",
