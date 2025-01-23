@@ -1,13 +1,12 @@
 body {
-  min-width: 300px;
-  max-width: 400px;
+  width: 400px;
   min-height: 200px;
   max-height: 600px;
   overflow-y: auto;
 }
 
 .text-truncate {
-  max-width: 200px;
+  max-width: 300px;
 }
 
 .url-link {
@@ -36,6 +35,10 @@ body {
 
 .color-button:hover {
   opacity: 0.8;
+}
+
+.small {
+  font-size: 0.875rem;
 }
 
 
