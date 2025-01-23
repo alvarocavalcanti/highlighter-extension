@@ -2,7 +2,7 @@ const isFirefox = process.env.BROWSER === "firefox";
 
 const manifest = {
   manifest_version: 3,
-  name: "Highlighter Extension",
+  name: "Highlighter",
   version: "1.0.0",
   description: "A cross-browser extension for highlighting text",
   permissions: ["storage", "activeTab", "contextMenus", "menus"],
