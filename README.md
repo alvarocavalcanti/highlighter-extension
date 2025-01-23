@@ -23,11 +23,6 @@ A cross-browser extension for highlighting and saving text across web pages.
   - Firefox
   - Edge
 
-## Installation
-
-### From Source
-1. Clone the repository
-
 ## Project Structure
 
 ```bash
