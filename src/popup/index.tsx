@@ -11,40 +11,42 @@ interface Highlight {
 }
 
 const HIGHLIGHT_COLORS = {
-  green: '#90EE90',
-  yellow: '#FFEB3B',
-  salmon: '#FA8072',
-  babyBlue: '#89CFF0'
+  green: "#90EE90",
+  yellow: "#FFEB3B",
+  salmon: "#FA8072",
+  babyBlue: "#89CFF0",
 };
 
 const Popup = () => {
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [currentUrl, setCurrentUrl] = useState<string>("");
   const [showCurrentUrlOnly, setShowCurrentUrlOnly] = useState(true);
-  const [defaultColor, setDefaultColor] = useState<string>('#90EE90'); // green default
+  const [defaultColor, setDefaultColor] = useState<string>("#90EE90"); // green default
   const [pageSize, setPageSize] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     // Get current settings
-    browserAPI.storage.local.get(['highlights', 'defaultColor', 'pageSize'])
+    browserAPI.storage.local
+      .get(["highlights", "defaultColor", "pageSize"])
       .then((result) => {
         setHighlights(result.highlights || []);
-        setDefaultColor(result.defaultColor || '#90EE90');
+        setDefaultColor(result.defaultColor || "#90EE90");
         setPageSize(result.pageSize || 5);
       });
 
     // Get current tab URL
-    browserAPI.tabs.query({ active: true, currentWindow: true })
-      .then(tabs => {
+    browserAPI.tabs
+      .query({ active: true, currentWindow: true })
+      .then((tabs) => {
         if (tabs[0]?.url) {
           setCurrentUrl(tabs[0].url);
         }
       });
   }, []);
 
-  const filteredHighlights = showCurrentUrlOnly 
-    ? highlights.filter(h => h.url === currentUrl)
+  const filteredHighlights = showCurrentUrlOnly
+    ? highlights.filter((h) => h.url === currentUrl)
     : highlights;
 
   const pageCount = Math.ceil(filteredHighlights.length / pageSize);
@@ -73,12 +75,14 @@ const Popup = () => {
       <h4 className="mb-3">Highlighter Extension</h4>
       <Form className="mb-3">
         <Form.Group>
-          <Form.Label>Default highlight color</Form.Label>
-          <div className="d-flex gap-2">
+          <Form.Label>Highlight color</Form.Label>
+          <div className="d-flex gap-2 mb-3">
             {Object.entries(HIGHLIGHT_COLORS).map(([name, color]) => (
               <button
                 key={color}
-                className={`color-button ${defaultColor === color ? 'active' : ''}`}
+                className={`color-button ${
+                  defaultColor === color ? "active" : ""
+                }`}
                 style={{ backgroundColor: color }}
                 onClick={() => handleColorChange(color)}
                 title={name}
@@ -86,21 +90,7 @@ const Popup = () => {
             ))}
           </div>
         </Form.Group>
-        <Form.Group className="mb-2">
-          <Form.Label>Items per page</Form.Label>
-          <div className="d-flex gap-2">
-            {[5, 10].map(size => (
-              <Button
-                key={size}
-                variant={pageSize === size ? "primary" : "outline-primary"}
-                onClick={() => handlePageSizeChange(size)}
-              >
-                {size}
-              </Button>
-            ))}
-          </div>
-        </Form.Group>
-        <Form.Check 
+        <Form.Check
           type="checkbox"
           id="url-filter"
           label="Show highlights for current page only"
@@ -111,13 +101,13 @@ const Popup = () => {
       <ListGroup className="mb-3">
         {paginatedHighlights.length > 0 ? (
           paginatedHighlights.map((highlight, index) => (
-            <ListGroup.Item 
-              key={`${highlight.url}-${highlight.text}`} 
+            <ListGroup.Item
+              key={`${highlight.url}-${highlight.text}`}
               className="d-flex justify-content-between align-items-center"
             >
               <div className="text-truncate me-2">
                 {!showCurrentUrlOnly && (
-                  <button 
+                  <button
                     className="text-muted d-block url-link border-0 bg-transparent p-0"
                     onClick={() => handleUrlClick(highlight.url)}
                     title={highlight.url}
@@ -125,18 +115,22 @@ const Popup = () => {
                     {highlight.url}
                   </button>
                 )}
-                <span style={{ backgroundColor: highlight.color }}>{highlight.text}</span>
+                <span style={{ backgroundColor: highlight.color }}>
+                  {highlight.text}
+                </span>
               </div>
-              <Button 
-                variant="outline-danger" 
+              <Button
+                variant="outline-danger"
                 size="sm"
                 onClick={() => {
-                  const newHighlights = highlights.filter((_, i) => 
-                    showCurrentUrlOnly 
-                      ? highlights[i].url !== highlight.url || highlights[i].text !== highlight.text
+                  const newHighlights = highlights.filter((_, i) =>
+                    showCurrentUrlOnly
+                      ? highlights[i].url !== highlight.url ||
+                        highlights[i].text !== highlight.text
                       : i !== index
                   );
-                  browserAPI.storage.local.set({ highlights: newHighlights })
+                  browserAPI.storage.local
+                    .set({ highlights: newHighlights })
                     .then(() => setHighlights(newHighlights));
                 }}
               >
@@ -146,29 +140,49 @@ const Popup = () => {
           ))
         ) : (
           <ListGroup.Item className="text-center text-muted">
-            {showCurrentUrlOnly ? "No highlights on this page" : "No highlights yet"}
+            {showCurrentUrlOnly
+              ? "No highlights on this page"
+              : "No highlights yet"}
           </ListGroup.Item>
         )}
       </ListGroup>
-      {pageCount > 1 && (
-        <div className="d-flex justify-content-center gap-2">
-          {[...Array(pageCount)].map((_, i) => (
-            <Button
-              key={i + 1}
-              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
-              size="sm"
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </Button>
-          ))}
+
+      {(pageCount > 1 || paginatedHighlights.length > 0) && (
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex gap-2">
+            {[5, 10].map(size => (
+              <Button
+                key={size}
+                variant={pageSize === size ? "primary" : "outline-primary"}
+                size="sm"
+                onClick={() => handlePageSizeChange(size)}
+              >
+                {size}
+              </Button>
+            ))}
+          </div>
+          
+          {pageCount > 1 && (
+            <div className="d-flex gap-2">
+              {[...Array(pageCount)].map((_, i) => (
+                <Button
+                  key={i + 1}
+                  variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+                  size="sm"
+                  onClick={() => setCurrentPage(i + 1)}
+                >
+                  {i + 1}
+                </Button>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </Container>
   );
 };
 
-const root = document.getElementById('root');
+const root = document.getElementById("root");
 if (root) {
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
