@@ -138,3 +138,68 @@ npm test
 - Chrome Web Store: [link]
 - Firefox Add-ons: [link]
 - Edge Add-ons: [link]
+
+## Publishing Instructions
+
+### Chrome Web Store
+
+1. Create a [Chrome Developer account](https://chrome.google.com/webstore/devconsole) ($5 one-time fee)
+2. Build extension: `npm run build`
+3. Zip contents of `dist` folder
+4. Go to Chrome Developer Dashboard
+5. Click "New Item"
+6. Upload the zip file
+7. Fill required fields:
+   - Description
+   - Screenshots (1280x800 or 640x400)
+   - Store icon (128x128)
+   - Promotional images (optional)
+8. Submit for review (typically 24-48 hours)
+
+### Firefox Add-ons
+
+1. Create [Firefox Add-ons account](https://addons.mozilla.org/developers/)
+2. Build extension: `npm run build:firefox`
+3. Zip contents of `dist` folder
+4. Go to Firefox Add-ons Developer Hub
+5. Click "Submit a New Add-on"
+6. Choose "On this site"
+7. Upload the zip file
+8. Fill required fields:
+   - Description
+   - Screenshots (1280x800)
+   - Icon (128x128)
+9. Submit for review (typically 1-7 days)
+
+### Edge Add-ons
+
+1. Create [Partner Center account](https://partner.microsoft.com/dashboard/microsoftedge/)
+2. Build extension: `npm run build:chrome`
+3. Zip contents of `dist` folder
+4. Go to Edge Add-ons Dashboard
+5. Click "Submit new extension"
+6. Upload the zip file
+7. Fill required fields:
+   - Description
+   - Screenshots (1280x800)
+   - Store listings
+   - Icon (128x128)
+8. Submit for review (typically 24-72 hours)
+
+### Required Assets for All Stores
+
+- Icon: 128x128 PNG
+- Screenshots: 1280x800 or 640x400
+- Description: Short (132 chars) and long versions
+- Privacy Policy URL
+- Website URL
+- Source code URL (if open source)
+
+### Pricing
+
+- Chrome: $5 one-time fee
+- Firefox: Free
+- Edge: Free
+- Safari: $99/year Apple Developer Program
+
+Note: Review times are approximate and may vary.
