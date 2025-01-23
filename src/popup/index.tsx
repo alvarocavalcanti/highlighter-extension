@@ -7,14 +7,33 @@ import "./popup.css";
 interface Highlight {
   url: string;
   text: string;
+  color: string;
 }
+
+const HIGHLIGHT_COLORS = {
+  green: '#90EE90',
+  yellow: '#FFEB3B',
+  salmon: '#FA8072',
+  babyBlue: '#89CFF0'
+};
 
 const Popup = () => {
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [currentUrl, setCurrentUrl] = useState<string>("");
   const [showCurrentUrlOnly, setShowCurrentUrlOnly] = useState(true);
+  const [defaultColor, setDefaultColor] = useState<string>('#90EE90'); // green default
+  const [pageSize, setPageSize] = useState<number>(5);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
+    // Get current settings
+    browserAPI.storage.local.get(['highlights', 'defaultColor', 'pageSize'])
+      .then((result) => {
+        setHighlights(result.highlights || []);
+        setDefaultColor(result.defaultColor || '#90EE90');
+        setPageSize(result.pageSize || 5);
+      });
+
     // Get current tab URL
     browserAPI.tabs.query({ active: true, currentWindow: true })
       .then(tabs => {
@@ -22,26 +41,65 @@ const Popup = () => {
           setCurrentUrl(tabs[0].url);
         }
       });
-
-    // Load highlights when popup opens
-    browserAPI.storage.local.get({ highlights: [] })
-      .then((result) => {
-        setHighlights(result.highlights || []);
-      });
   }, []);
 
   const filteredHighlights = showCurrentUrlOnly 
     ? highlights.filter(h => h.url === currentUrl)
     : highlights;
 
+  const pageCount = Math.ceil(filteredHighlights.length / pageSize);
+  const paginatedHighlights = filteredHighlights.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
   const handleUrlClick = (url: string) => {
     browserAPI.tabs.create({ url, active: true });
+  };
+
+  const handleColorChange = (color: string) => {
+    setDefaultColor(color);
+    browserAPI.storage.local.set({ defaultColor: color });
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1);
+    browserAPI.storage.local.set({ pageSize: size });
   };
 
   return (
     <Container className="p-3">
       <h4 className="mb-3">Highlighter Extension</h4>
       <Form className="mb-3">
+        <Form.Group>
+          <Form.Label>Default highlight color</Form.Label>
+          <div className="d-flex gap-2">
+            {Object.entries(HIGHLIGHT_COLORS).map(([name, color]) => (
+              <button
+                key={color}
+                className={`color-button ${defaultColor === color ? 'active' : ''}`}
+                style={{ backgroundColor: color }}
+                onClick={() => handleColorChange(color)}
+                title={name}
+              />
+            ))}
+          </div>
+        </Form.Group>
+        <Form.Group className="mb-2">
+          <Form.Label>Items per page</Form.Label>
+          <div className="d-flex gap-2">
+            {[5, 10].map(size => (
+              <Button
+                key={size}
+                variant={pageSize === size ? "primary" : "outline-primary"}
+                onClick={() => handlePageSizeChange(size)}
+              >
+                {size}
+              </Button>
+            ))}
+          </div>
+        </Form.Group>
         <Form.Check 
           type="checkbox"
           id="url-filter"
@@ -51,8 +109,8 @@ const Popup = () => {
         />
       </Form>
       <ListGroup className="mb-3">
-        {filteredHighlights.length > 0 ? (
-          filteredHighlights.map((highlight, index) => (
+        {paginatedHighlights.length > 0 ? (
+          paginatedHighlights.map((highlight, index) => (
             <ListGroup.Item 
               key={`${highlight.url}-${highlight.text}`} 
               className="d-flex justify-content-between align-items-center"
@@ -67,7 +125,7 @@ const Popup = () => {
                     {highlight.url}
                   </button>
                 )}
-                {highlight.text}
+                <span style={{ backgroundColor: highlight.color }}>{highlight.text}</span>
               </div>
               <Button 
                 variant="outline-danger" 
@@ -92,6 +150,20 @@ const Popup = () => {
           </ListGroup.Item>
         )}
       </ListGroup>
+      {pageCount > 1 && (
+        <div className="d-flex justify-content-center gap-2">
+          {[...Array(pageCount)].map((_, i) => (
+            <Button
+              key={i + 1}
+              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+              size="sm"
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+        </div>
+      )}
     </Container>
   );
 };

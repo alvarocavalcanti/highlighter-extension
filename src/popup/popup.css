@@ -21,5 +21,22 @@ body {
   color: #0056b3 !important;
 }
 
+.color-button {
+  width: 24px;
+  height: 24px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-button.active {
+  border-color: #000;
+}
+
+.color-button:hover {
+  opacity: 0.8;
+}
+
 
 
