@@ -17,19 +17,17 @@ const Help = () => {
       <Container className="p-3">
         <h4 className="mb-3">Limitations</h4>
         <ul className="ps-3">
-          <li>Selecting links works when you first highlight it, but not upon returning to the page</li>
-          <li>Selecting single words or common passages causes all of their occurrences to be highlighted</li>
+          <li>
+            Selecting links works when you first highlight it, but not upon
+            returning to the page
+          </li>
+          <li>
+            Selecting single words or common passages causes all of their
+            occurrences to be highlighted
+          </li>
         </ul>
       </Container>
-      <Container className="p-3 text-center">
-        <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
-          <img
-            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-            alt="Buy Me A Coffee"
-            style={{ height: "60px", width: "217px" }}
-          />
-        </a>
-      </Container>
+      <a href='https://ko-fi.com/O4O1WSP5B' target='_blank' rel="noreferrer"><img height='36' style={{border:0, height:'36px'}} src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' alt='Buy Me a Coffee at ko-fi.com' /></a>
     </>
   );
 };
