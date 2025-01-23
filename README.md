@@ -1,6 +1,32 @@
 # Highlighter Extension
 
-This is a simple extension that highlights text in web pages. It is compatible with Chrome, Firefox and Edge.
+A cross-browser extension for highlighting and saving text across web pages.
+
+## Features
+
+- Highlight text on any webpage using right-click context menu
+- Customizable highlight colors:
+  - Green (default)
+  - Yellow
+  - Salmon
+  - Baby Blue
+- Persistent storage of highlights across browser sessions
+- Popup interface to:
+  - View all highlights
+  - Filter highlights by current page
+  - Customize default highlight color
+  - Remove highlights
+  - Adjust items per page (5 or 10)
+  - Click on URLs to revisit highlighted pages
+- Cross-browser support:
+  - Chrome
+  - Firefox
+  - Edge
+
+## Installation
+
+### From Source
+1. Clone the repository
 
 ## Project Structure
 
@@ -63,8 +89,6 @@ npm run build
 - Firefox 78+
 - Edge 88+
 
-## Development
-
 ### Prerequisites
 
 - Node.js 16+
@@ -91,3 +115,31 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 MIT License
+
+## Usage
+
+1. Select text on any webpage
+2. Right-click and choose "Highlight Selection"
+3. Click the extension icon to:
+   - View your highlights
+   - Change default highlight color
+   - Manage saved highlights
+
+## Development
+
+```bash
+# Watch mode for development
+npm run dev
+
+# Build for production
+npm run build
+
+# Run tests
+npm test
+```
+
+### From Store
+
+- Chrome Web Store: [link]
+- Firefox Add-ons: [link]
+- Edge Add-ons: [link]

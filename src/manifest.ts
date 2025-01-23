@@ -1,4 +1,4 @@
-const isFirefox = process.env.BROWSER === 'firefox';
+const isFirefox = process.env.BROWSER === "firefox";
 
 const manifest = {
   manifest_version: 3,
@@ -11,27 +11,34 @@ const manifest = {
     default_icon: {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+      "128": "icons/icon128.png",
     },
-    default_title: "Highlighter Extension"
+    default_title: "Highlighter Extension",
   },
-  background: isFirefox ? {
-    scripts: ["background.js"],
-    type: "module"
-  } : {
-    service_worker: "background.js"
-  },
+  background: isFirefox
+    ? {
+        scripts: ["background.js"],
+        type: "module",
+      }
+    : {
+        service_worker: "background.js",
+      },
   content_scripts: [
     {
       matches: ["<all_urls>"],
-      js: ["content.js"]
-    }
+      js: ["content.js"],
+    },
   ],
   icons: {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  }
+    "128": "icons/icon128.png",
+  },
+  browser_specific_settings: {
+    edge: {
+      browser_action_next_to_address_bar: true, // Optional: controls icon placement
+    },
+  },
 };
 
 module.exports = { default: manifest };
