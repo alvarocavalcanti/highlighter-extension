@@ -45,6 +45,9 @@ const manifest = {
     edge: {
       browser_action_next_to_address_bar: true, // Optional: controls icon placement
     },
+    gecko: {
+      id: "highlighter@memorablenaton.es" // Required for Firefox
+    }
   },
   web_accessible_resources: [
     {
