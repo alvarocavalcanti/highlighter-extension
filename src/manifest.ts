@@ -7,7 +7,12 @@ const manifest = {
   description: "A cross-browser extension for highlighting text",
   author: "Alvaro Cavalcanti",
   homepage_url: "https://memorablenaton.es/highlighter",
-  permissions: ["storage", "activeTab", "contextMenus", "menus"],
+  permissions: [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
   action: {
     default_popup: "popup.html",
     default_icon: {
@@ -41,6 +46,12 @@ const manifest = {
       browser_action_next_to_address_bar: true, // Optional: controls icon placement
     },
   },
+  web_accessible_resources: [
+    {
+      resources: ["content/index.js"],
+      matches: ["<all_urls>"]
+    }
+  ]
 };
 
 module.exports = { default: manifest };
