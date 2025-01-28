@@ -11,7 +11,6 @@ const manifest = {
     "storage",
     "activeTab",
     "contextMenus",
-    "scripting"
   ],
   action: {
     default_popup: "popup.html",

@@ -1,27 +1,23 @@
-# Highlighter Extension
+# Highlighter
 
-A cross-browser extension for highlighting and saving text across web pages.
+A cross-browser extension for highlighting text on any webpage.
 
 ## Features
 
-- Highlight text on any webpage using right-click context menu
-- Customizable highlight colors:
-  - Green (default)
-  - Yellow
-  - Salmon
-  - Baby Blue
-- Persistent storage of highlights across browser sessions
-- Popup interface to:
-  - View all highlights
-  - Filter highlights by current page
-  - Customize default highlight color
-  - Remove highlights
-  - Adjust items per page (5 or 10)
-  - Click on URLs to revisit highlighted pages
-- Cross-browser support:
-  - Chrome
-  - Firefox
-  - Edge
+- Highlight text on any webpage
+- Save highlights locally
+- Access highlights through a convenient popup
+- Right-click menu integration for quick highlighting
+
+## Privacy & Permissions
+
+This extension requires minimal permissions to function:
+
+- `storage`: Saves your highlights and preferences locally on your device
+- `activeTab`: Allows the extension to interact with the current webpage you're viewing
+- `contextMenus`: Enables the right-click menu for highlighting text
+
+All data is stored locally and is never shared with third parties. See our [Privacy Policy](PRIVACY_POLICY.md) for more details.
 
 ## Project Structure
 
