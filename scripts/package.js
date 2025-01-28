@@ -2,10 +2,8 @@ const fs = require('fs');
 const archiver = require('archiver');
 const manifest = require('../src/manifest.ts');
 
-const version = manifest.version;
-
-async function createZip(browser) {
-  const output = fs.createWriteStream(`./dist/highlighter-${browser}-${version}.zip`);
+async function createZip(browser, version) {
+  const output = fs.createWriteStream(`./packages/highlighter-${browser}-${version}.zip`);
   const archive = archiver('zip', {
     zlib: { level: 9 } // Maximum compression
   });
@@ -26,11 +24,11 @@ async function createZip(browser) {
   return archive.finalize();
 }
 
-async function package() {
+async function package(version) {
   try {
     await Promise.all([
-      createZip('chrome'),
-      createZip('firefox')
+      createZip('chrome', version),
+      createZip('firefox', version)
     ]);
     console.log(`\nPackaging complete! Created:\n- highlighter-chrome-${version}.zip\n- highlighter-firefox-${version}.zip`);
   } catch (error) {
@@ -39,4 +37,4 @@ async function package() {
   }
 }
 
-package(); 
+package(manifest.default.version); 
