@@ -1,6 +1,6 @@
 {
   "name": "highlighter-extension",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A cross-browser extension for highlighting text",
   "scripts": {
     "dev": "webpack --watch --config webpack.config.js",

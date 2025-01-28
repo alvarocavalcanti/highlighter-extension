@@ -3,7 +3,7 @@ const isFirefox = process.env.BROWSER === "firefox";
 const manifest = {
   manifest_version: 3,
   name: "Highlighter",
-  version: "1.0.0",
+  version: "1.0.1",
   description: "A cross-browser extension for highlighting text",
   author: "Alvaro Cavalcanti",
   homepage_url: "https://memorablenaton.es/highlighter",

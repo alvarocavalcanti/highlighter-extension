@@ -1,44 +1,42 @@
 const fs = require('fs');
-const path = require('path');
 const archiver = require('archiver');
+const manifest = require('../src/manifest.ts');
 
-function zipDirectory(sourceDir, outPath) {
-  const archive = archiver('zip', { zlib: { level: 9 } });
-  const stream = fs.createWriteStream(outPath);
+const version = manifest.version;
 
-  return new Promise((resolve, reject) => {
-    archive
-      .directory(sourceDir, false)
-      .on('error', err => reject(err))
-      .pipe(stream);
-
-    stream.on('close', () => resolve());
-    archive.finalize();
+async function createZip(browser) {
+  const output = fs.createWriteStream(`./dist/highlighter-${browser}-${version}.zip`);
+  const archive = archiver('zip', {
+    zlib: { level: 9 } // Maximum compression
   });
+
+  output.on('close', () => {
+    console.log(`${browser} package created: ${archive.pointer()} bytes`);
+  });
+
+  archive.on('error', (err) => {
+    throw err;
+  });
+
+  archive.pipe(output);
+
+  // Add the appropriate dist folder to the zip
+  archive.directory(`dist/${browser}/`, false);
+
+  return archive.finalize();
 }
 
-async function packageExtensions() {
-  const distPath = path.join(__dirname, '../dist');
-  const packagesPath = path.join(__dirname, '../packages');
-
-  // Create packages directory if it doesn't exist
-  if (!fs.existsSync(packagesPath)) {
-    fs.mkdirSync(packagesPath);
-  }
-
-  // Get all browser directories
-  const browsers = fs.readdirSync(distPath).filter(
-    file => fs.statSync(path.join(distPath, file)).isDirectory()
-  );
-
-  for (const browser of browsers) {
-    const sourceDir = path.join(distPath, browser);
-    const zipPath = path.join(packagesPath, `highlighter-${browser}.zip`);
-
-    console.log(`Packaging ${browser}...`);
-    await zipDirectory(sourceDir, zipPath);
-    console.log(`Created ${zipPath}`);
+async function package() {
+  try {
+    await Promise.all([
+      createZip('chrome'),
+      createZip('firefox')
+    ]);
+    console.log(`\nPackaging complete! Created:\n- highlighter-chrome-${version}.zip\n- highlighter-firefox-${version}.zip`);
+  } catch (error) {
+    console.error('Error creating packages:', error);
+    process.exit(1);
   }
 }
 
-packageExtensions().catch(console.error); 
+package(); 
